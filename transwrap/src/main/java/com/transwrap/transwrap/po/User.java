@@ -31,6 +31,12 @@ public class User {
     private String phone;
 
     @Column
+    private String password;
+
+    @Column
+    private long user_authority;
+
+    @Column
     private Timestamp createTime;
 
     @Column

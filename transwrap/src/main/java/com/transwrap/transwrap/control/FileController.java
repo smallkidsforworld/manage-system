@@ -1,6 +1,5 @@
 package com.transwrap.transwrap.control;
 
-import com.transwrap.transwrap.entity.FileInfo;
 import com.transwrap.transwrap.service.FileService;
 import com.transwrap.transwrap.utils.ApiResult;
 import io.swagger.annotations.Api;
@@ -9,8 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * @author ：yml
@@ -28,14 +28,14 @@ public class FileController {
 
     @ApiOperation("单个文件上传")
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
-    public ApiResult upLoadFile(@RequestParam String fileType, @RequestParam MultipartFile file) {
-        return ApiResult.success();
+    public ApiResult upLoadFile(@RequestParam String fileType, @RequestParam MultipartFile file) throws IOException {
+        return fileService.upLoadFile(fileType, file);
     }
 
     @ApiOperation("多个文件上传")
     @RequestMapping(value = "/uploadMoreFile", method = RequestMethod.POST)
-    public ApiResult upLoadMoreFile(@RequestPart String[] fileType, @RequestPart MultipartFile[] file) {
-        return ApiResult.success();
+    public ApiResult upLoadMoreFile(@RequestPart String[] fileType, @RequestPart MultipartFile[] file) throws IOException {
+        return fileService.upLoadMoreFile(fileType, file);
     }
 
     @ApiOperation("文件列表")
@@ -46,8 +46,8 @@ public class FileController {
 
     @ApiOperation("单个文件下载")
     @RequestMapping(value = "/fileDownLoad", method = RequestMethod.POST)
-    public ApiResult downLoadFile(@RequestParam String filename) {
-        return ApiResult.success();
+    public void downLoadFile(@RequestParam String filename, HttpServletResponse response) throws ExecutionException, InterruptedException {
+        fileService.downLoadFIle(filename, response);
     }
 
     @ApiOperation("批量文件下载")
@@ -55,4 +55,5 @@ public class FileController {
     public ApiResult downLoadMoreFile(@RequestPart String[] fileList) {
         return ApiResult.success();
     }
+
 }

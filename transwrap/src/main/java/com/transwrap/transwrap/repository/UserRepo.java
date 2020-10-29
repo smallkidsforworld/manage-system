@@ -24,7 +24,11 @@ public class UserRepo {
     }
 
     public User getUserById(String user_id){
-        return userMapper.queryByProductType(user_id);
+        return userMapper.queryByUserId(user_id);
+    }
+
+    public User getUserByPhone(String phone){
+        return userMapper.queryByPhone(phone);
     }
 
 }

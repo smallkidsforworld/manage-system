@@ -3,9 +3,12 @@ package com.transwrap.transwrap.utils;
 import com.transwrap.transwrap.entity.FileInfo;
 
 import javax.servlet.http.HttpServletResponse;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.attribute.FileAttribute;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -18,13 +21,13 @@ import java.util.stream.Collectors;
  * @modified By：
  */
 public class FileUtil {
-    final static String split;
+    public final static Character split;
 
     static {
-        if (SystemUtil.ISWINDOWS)
-            split = "/";
+        if (!SystemUtil.ISWINDOWS)
+            split = '/';
         else
-            split = "\\";
+            split = '\\';
     }
 
     public static List<FileInfo> getAllFileAbsolutePath(String directoryPath) throws IOException {
@@ -77,13 +80,37 @@ public class FileUtil {
         return true;
     }
 
-    public static void main(String[] args) {
-        System.out.println("absolutePathToRelativePath(\"yml.zip\") = " + absolutePathToRelativePath("yml.zip"));
+
+    public static File byteToFile(byte[] bfile, String fileName) {
+        BufferedOutputStream bos = null;
+        FileOutputStream fos = null;
+        File file = null;
+        try {
+            file = new File(fileName);
+            if (!file.exists())
+                file.createNewFile();
+            fos = new FileOutputStream(file);
+            bos = new BufferedOutputStream(fos);
+            bos.write(bfile);
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (bos != null) {
+                try {
+                    bos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+            if (fos != null) {
+                try {
+                    fos.close();
+                } catch (IOException e1) {
+                    e1.printStackTrace();
+                }
+            }
+        }
+        return file;
     }
 
-    public static boolean upLoadFile() {
-
-
-        return true;
-    }
 }

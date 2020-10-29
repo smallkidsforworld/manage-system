@@ -4,6 +4,7 @@ import com.transwrap.transwrap.po.User;
 import com.transwrap.transwrap.repository.UserRepo;
 import com.transwrap.transwrap.utils.ApiResult;
 import org.springframework.stereotype.Service;
+import org.springframework.util.DigestUtils;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -31,6 +32,18 @@ public class UserService {
         if(user==null)
             ApiResult.fail("没有对应的用户");
         return ApiResult.success(user);
+    }
+
+
+    public ApiResult userLogin(String password, String userId){
+        User user = userRepo.getUserById(userId);
+        if(user==null) {
+            user = userRepo.getUserByPhone(userId);
+        }
+        if(DigestUtils.md5DigestAsHex(password.getBytes()).equals(user.getPassword()))
+            return ApiResult.success("the password is right!");
+        else
+            return ApiResult.fail("the password is wrong!");
     }
 
 }

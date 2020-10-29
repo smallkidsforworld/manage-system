@@ -12,7 +12,6 @@ import java.util.zip.ZipFile;
 import java.util.zip.ZipOutputStream;
 
 public class ZipUtil {
-    final String temp_name = "temp.zip";
 
     public static void unZip(File zipPath, String descDir) throws IOException {
         if (SystemUtil.ISWINDOWS)
@@ -27,21 +26,26 @@ public class ZipUtil {
      * 返回生成的压缩包的文件路径
      */
 
-    public static File zipAllFileInThisDirctory(String path,String temp_name) throws IOException {
-        File file = new File(path);
-        if (!file.exists() || file.isFile())
-            throw new IOException("路径异常，不存在文件或该目录不是文件夹");
+
+    /*
+     * list文件压缩
+     */
+    public static File zipFileList(String temp_name, String... paths) throws IOException {
         File zipFile = new File(temp_name);
-
-        try(ZipOutputStream outputStream = new ZipOutputStream(new FileOutputStream(zipFile))){
-
-        }catch (Exception e){
-            e.printStackTrace();
+        for (String path : paths) {
+            File file = new File(path);
+            if (!file.exists() || file.isDirectory())
+                throw new IOException("路径异常，不存在文件或该目录不是文件夹");
+            try (ZipOutputStream outputStream = new ZipOutputStream(new FileOutputStream(zipFile))) {
+                outputStream.putNextEntry(new ZipEntry(FileUtil.absolutePathToRelativePath(path)));
+                outputStream.write(Files.readAllBytes(file.toPath()));
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
-
-
         return zipFile;
     }
+
 
     /**
      * 解压文件到指定目录
@@ -78,35 +82,6 @@ public class ZipUtil {
         }
     }
 
-    public static File getFile(byte[] bfile, String fileName) {
-        BufferedOutputStream bos = null;
-        FileOutputStream fos = null;
-        File file = null;
-        try {
-            file = new File(fileName);
-            fos = new FileOutputStream(file);
-            bos = new BufferedOutputStream(fos);
-            bos.write(bfile);
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            if (bos != null) {
-                try {
-                    bos.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e1) {
-                    e1.printStackTrace();
-                }
-            }
-        }
-        return file;
-    }
 
     public static void main(String[] args) throws IOException {
         unZipFilesWindows(new File("C:\\yml.zip"), "C:\\Users\\hbwxc\\manual\\");

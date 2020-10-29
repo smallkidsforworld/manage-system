@@ -21,7 +21,10 @@ public interface UserMapper extends BaseMapper<User> {
     List<User> getAllUser();
 
     @Select("select * from user where id = #{user_id}")
-    User queryByProductType(@Param("id") String user_id);
+    User queryByUserId(@Param("id") String user_id);
+
+    @Select("select * from user where phone = #{phone}")
+    User queryByPhone(@Param("id") String phone);
 
 
 }

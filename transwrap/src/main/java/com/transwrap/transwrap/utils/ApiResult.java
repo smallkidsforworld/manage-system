@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ApiResult {
-    private Object data_body;
+    private Object dataBody;
     private String result = TRUE;
 
     private String rejectReason = "";
