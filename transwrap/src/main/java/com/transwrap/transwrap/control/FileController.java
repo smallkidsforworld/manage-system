@@ -1,10 +1,16 @@
 package com.transwrap.transwrap.control;
 
+import com.transwrap.transwrap.entity.FileInfo;
+import com.transwrap.transwrap.service.FileService;
 import com.transwrap.transwrap.utils.ApiResult;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.annotation.Resource;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * @author ：yml
@@ -17,6 +23,8 @@ import org.springframework.web.multipart.MultipartFile;
 @Api(tags = "FileOperate")
 public class FileController {
 
+    @Resource
+    FileService fileService;
 
     @ApiOperation("单个文件上传")
     @RequestMapping(value = "/uploadFile", method = RequestMethod.POST)
@@ -32,8 +40,8 @@ public class FileController {
 
     @ApiOperation("文件列表")
     @RequestMapping(value = "/getFileList", method = RequestMethod.GET)
-    public ApiResult getFileList() {
-        return ApiResult.success();
+    public ApiResult getFileList(@RequestParam String path) throws IOException {
+        return fileService.getAllFile(path);
     }
 
     @ApiOperation("单个文件下载")

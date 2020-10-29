@@ -1,10 +1,12 @@
 package com.transwrap.transwrap.service;
 
+import com.transwrap.transwrap.entity.FileInfo;
+import com.transwrap.transwrap.utils.ApiResult;
+import com.transwrap.transwrap.utils.FileUtil;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
-import java.util.ArrayList;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -19,28 +21,10 @@ public class FileService {
     @Value("${store.path}")
     String file_store_path;
 
-    public static List<String> getAllFile(String directoryPath, boolean isAddDirectory) {
-        List<String> list = new ArrayList<String>();
-        File baseFile = new File(directoryPath);
-        if (baseFile.isFile() || !baseFile.exists()) {
-            return list;
-        }
-        File[] files = baseFile.listFiles();
-        for (File file : files) {
-            if (file.isDirectory()) {
-                if (isAddDirectory) {
-                    list.add(absolutepathToRelativePath(file.getAbsolutePath()));
-                }
-                list.addAll(getAllFile(file.getAbsolutePath(), isAddDirectory));
-            } else {
-                list.add(absolutepathToRelativePath(file.getAbsolutePath()));
-            }
-        }
-        return list;
+    public ApiResult getAllFile(String path) throws IOException {
+        List<FileInfo> fileInfoList = FileUtil.getAllFileAbsolutePath(path);
+        return fileInfoList == null ? ApiResult.fail("no file") : ApiResult.success(fileInfoList);
     }
 
-    public static String absolutepathToRelativePath(String absolutepath) {
-        return absolutepath.substring(absolutepath.lastIndexOf("\\") + 1);
-    }
 
 }

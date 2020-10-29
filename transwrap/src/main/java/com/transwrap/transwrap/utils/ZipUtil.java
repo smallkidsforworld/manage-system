@@ -1,18 +1,46 @@
 package com.transwrap.transwrap.utils;
 
 
+import org.springframework.beans.factory.annotation.Value;
+
 import java.io.*;
 import java.nio.charset.Charset;
+import java.nio.file.Files;
 import java.util.Enumeration;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
+import java.util.zip.ZipOutputStream;
 
 public class ZipUtil {
+    final String temp_name = "temp.zip";
 
     public static void unZip(File zipPath, String descDir) throws IOException {
         if (SystemUtil.ISWINDOWS)
-            unZipFilesWindows(zipPath,descDir);
+            unZipFilesWindows(zipPath, descDir);
 
+    }
+
+
+
+    /*
+     * 压缩文件夹下的所有文件到压缩包
+     * 返回生成的压缩包的文件路径
+     */
+
+    public static File zipAllFileInThisDirctory(String path,String temp_name) throws IOException {
+        File file = new File(path);
+        if (!file.exists() || file.isFile())
+            throw new IOException("路径异常，不存在文件或该目录不是文件夹");
+        File zipFile = new File(temp_name);
+
+        try(ZipOutputStream outputStream = new ZipOutputStream(new FileOutputStream(zipFile))){
+
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        return zipFile;
     }
 
     /**
