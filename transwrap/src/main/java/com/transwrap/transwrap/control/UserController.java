@@ -23,7 +23,6 @@ public class UserController {
     @Resource
     UserService userService;
 
-    //    @RequestMapping(value = "/getAllUser")
     @ApiOperation("获得全部用户")
     @GetMapping(value = "/getAllUser")
     public ApiResult getAllUser() {
@@ -37,8 +36,16 @@ public class UserController {
     }
 
     @ApiOperation("用户登录")
-    @RequestMapping(value = "/login")
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
     public ApiResult userLogin(@RequestParam String password, @RequestParam String userId) {
         return userService.userLogin(password,userId);
     }
+
+    @ApiOperation("用户权限修改")
+    @RequestMapping(value = "/update/user_authority",method = RequestMethod.POST)
+    public ApiResult userAuthorityUpdate(@RequestParam String id, @RequestParam String authority) {
+        return userService.userAuthorityUpdate(id,authority);
+    }
+
+
 }

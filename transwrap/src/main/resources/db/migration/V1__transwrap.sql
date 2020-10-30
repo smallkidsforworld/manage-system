@@ -1,9 +1,9 @@
 create table `user`(
     `id` integer NOT NULL AUTO_INCREMENT COMMENT '自增id',
-    `name` varchar(20),
+    `name` varchar(20) unique,
     `introduction` text comment '个人介绍',
-    `phone` varchar(11),
-    `password` varchar(32),
+    `phone` varchar(11) unique,
+    `password` varchar(32) ,
     `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
     `user_authority` integer default 0 comment '用户权限',

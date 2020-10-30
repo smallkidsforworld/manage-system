@@ -12,8 +12,8 @@ spring:
 server:
   port: 10000
 store:
-  path: C:\temp\
-  temporary: c:\temp\
+  path: C:\data
+  temporary: c:\temp
 
 swagger:
   enable: true

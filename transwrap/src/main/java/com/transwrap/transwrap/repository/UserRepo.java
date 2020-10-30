@@ -1,5 +1,6 @@
 package com.transwrap.transwrap.repository;
 
+import com.transwrap.transwrap.entity.ItemCache;
 import com.transwrap.transwrap.mapper.UserMapper;
 import com.transwrap.transwrap.po.User;
 import org.springframework.stereotype.Repository;
@@ -16,6 +17,8 @@ import java.util.List;
 @Repository
 public class UserRepo {
 
+    private final ItemCache<User> itemCache = new ItemCache<>();
+
     @Resource
     UserMapper userMapper;
 
@@ -29,6 +32,13 @@ public class UserRepo {
 
     public User getUserByPhone(String phone){
         return userMapper.queryByPhone(phone);
+    }
+
+    public boolean updateStatus(String id,String user_authority) {
+        userMapper.updateStatus(id,user_authority);
+
+
+        return true;
     }
 
 }

@@ -13,10 +13,10 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 /**
  * @author yang.song
  */
-@SuppressWarnings("SpringJavaAutowiringInspection")
 @Configuration
 public class FlywayConfiguration {
     private static final Logger LOG = LoggerFactory

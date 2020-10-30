@@ -8,7 +8,7 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Timestamp;
+import java.util.Date;
 
 @Data
 @AllArgsConstructor
@@ -36,10 +36,11 @@ public class User {
     @Column
     private long user_authority;
 
-    @Column
-    private Timestamp createTime;
 
-    @Column
-    private Timestamp modifyTime;
+    @Column(name = "create_time")
+    private Date createTime;
+
+    @Column(name = "modify_time")
+    private Date modifyTime;
 
 }

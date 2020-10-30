@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
 
 /**
  * @author ：yml
@@ -46,14 +46,14 @@ public class FileController {
 
     @ApiOperation("单个文件下载")
     @RequestMapping(value = "/fileDownLoad", method = RequestMethod.POST)
-    public void downLoadFile(@RequestParam String filename, HttpServletResponse response) throws ExecutionException, InterruptedException {
-        fileService.downLoadFIle(filename, response);
+    public void downLoadFile(@RequestParam String filename, HttpServletResponse response, HttpServletRequest request) throws Exception {
+        fileService.downLoadFile(filename, response,request);
     }
 
     @ApiOperation("批量文件下载")
     @RequestMapping(value = "/fileMoreDownLoad", method = RequestMethod.POST)
-    public ApiResult downLoadMoreFile(@RequestPart String[] fileList) {
-        return ApiResult.success();
+    public void downLoadMoreFile(@RequestPart String[] fileList,HttpServletResponse response, HttpServletRequest request) throws Exception {
+        fileService.downLoadMoreFile(fileList,response,request);
     }
 
 }

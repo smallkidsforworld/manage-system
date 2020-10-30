@@ -75,8 +75,6 @@ public class FileUtil {
         // 如果是一个文件夹，将文件夹下的所有文件打包
         response.setContentType("application/force-download");// 设置强制下载不打开
         response.addHeader("Content-Disposition", "attachment;fileName=" + FileUtil.absolutePathToRelativePath(filePath));
-
-
         return true;
     }
 
@@ -87,8 +85,9 @@ public class FileUtil {
         File file = null;
         try {
             file = new File(fileName);
-            if (!file.exists())
+            if (!file.exists()) {
                 file.createNewFile();
+            }
             fos = new FileOutputStream(file);
             bos = new BufferedOutputStream(fos);
             bos.write(bfile);

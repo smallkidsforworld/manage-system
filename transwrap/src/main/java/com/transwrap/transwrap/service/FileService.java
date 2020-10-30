@@ -10,23 +10,25 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.RequestDispatcher;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Files;
 import java.util.*;
-import java.util.concurrent.*;
 
 /**
  * @author ：yml
  * @date ：Created in 2020/10/26 11:04
- * @description：文件上传
+ * @description：文件操作
  * @modified By：
  */
 @Service
 public class FileService {
-
-    ExecutorService executorService = Executors.newFixedThreadPool(10);
 
     @Value("${store.path}")
     private String file_store_path;
@@ -43,6 +45,10 @@ public class FileService {
         if (file.isEmpty())
             return ApiResult.fail(" file is empty ");
         String filePath = StringUtils.join(Arrays.asList(file_store_path, fileType, file.getOriginalFilename()), FileUtil.split);
+        File director = new File(file_store_path + FileUtil.split + fileType);
+        if (!director.exists())
+            if(!director.mkdirs())
+                return ApiResult.fail(" 路径创建失败 ");
         File store_file = FileUtil.byteToFile(file.getBytes(), filePath);
         if (store_file == null)
             return ApiResult.fail(" can't read the file");
@@ -59,24 +65,27 @@ public class FileService {
         return ApiResult.success(load_info);
     }
 
-    public void downLoadFIle(String filename, HttpServletResponse response) throws ExecutionException, InterruptedException {
-        Future<ApiResult> d = executorService.submit(() -> {
-            File file = new File(filename);
-            if (!file.exists())
-                return ApiResult.fail("file not exists");
-            byte[] file_info = Files.readAllBytes(file.toPath());
-            if (file_info == null || file_info.length <= 0)
-                return ApiResult.fail("the file info is empty");
-            response.reset();
-            response.addHeader("Content-Disposition", "attachment;filename=" + filename);
-            response.addHeader("Content-Length", "" + file_info.length);
+    public void downLoadFile(String filename, HttpServletResponse response, HttpServletRequest request) throws Exception {
+        File file = new File(filename);
+        if(file.exists()){
+            //设置相应类型让浏览器知道用什么打开  用application/octet-stream也可以，看是什么浏览器
             response.setContentType("application/octet-stream");
-            response.getOutputStream().write(file_info);
-            return ApiResult.success();
-        });
+            //设置头信息
+            response.setHeader("Content-Disposition", "attachment;filename=\"" + filename.substring(filename.lastIndexOf(FileUtil.split)+1) + "\"");
+            InputStream inputStream = new FileInputStream(file);
+            ServletOutputStream outputStream = response.getOutputStream();
+            outputStream.write(Files.readAllBytes(file.toPath()));
+            outputStream.close();
+            inputStream.close();
+        }else{
+            request.setAttribute("errorResult", "文件不存在,下载失败!");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("index.jsp");
+            dispatcher.forward(request, response);
+        }
     }
 
-    public void downLoadMoreFile(String[] file_list) throws Exception {
+    public void downLoadMoreFile(String[] file_list,HttpServletResponse response, HttpServletRequest request) throws Exception {
         File file = ZipUtil.zipFileList(file_temporary_path + "temp.zip", file_list);
+        downLoadFile(file.getAbsolutePath(),response,request);
     }
 }
