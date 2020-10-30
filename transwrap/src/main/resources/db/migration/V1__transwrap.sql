@@ -14,14 +14,15 @@ create table `user`(
   default charset = utf8mb4 comment ='个人信息';
 
 
-create table `dailymanage`  (
+create table `daily_manage`  (
     `id` integer NOT NULL AUTO_INCREMENT COMMENT '自增id',
-    `userid` integer,
+    `user_id` integer,
     `info` text comment '信息',
     `title` varchar(50) comment '标题',
     `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
     `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `end_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间',
     primary key (`id`),
-    foreign key(userid) references user(id),
-    unique (`userid`,`title`)
+    foreign key(user_id) references user(id),
+    unique (user_id,`title`)
 );

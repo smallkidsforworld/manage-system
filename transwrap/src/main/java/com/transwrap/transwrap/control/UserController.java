@@ -1,5 +1,6 @@
 package com.transwrap.transwrap.control;
 
+import com.transwrap.transwrap.exception.UserException;
 import com.transwrap.transwrap.service.UserService;
 import com.transwrap.transwrap.utils.ApiResult;
 import io.swagger.annotations.Api;
@@ -43,7 +44,7 @@ public class UserController {
 
     @ApiOperation("用户权限修改")
     @RequestMapping(value = "/update/user_authority",method = RequestMethod.POST)
-    public ApiResult userAuthorityUpdate(@RequestParam String id, @RequestParam String authority) {
+    public ApiResult userAuthorityUpdate(@RequestParam String id, @RequestParam String authority) throws UserException {
         return userService.userAuthorityUpdate(id,authority);
     }
 

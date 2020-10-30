@@ -10,32 +10,31 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.util.Date;
 
+/**
+ * @description: 日常事物映射类
+ * @author: yml
+ * @time: 2020/10/30
+ */
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Table(name = "user")
-public class User {
+@Table(name = "daily_manage")
+public class DailyManage {
 
     @Id
-    @Column
+    @Column(name = "id")
     private Long id;
 
-    @Column
-    private String name;
+    @Column(name = "user_id")
+    private Long user_id;
 
-    @Column
-    private String introduction;
+    @Column(name = "info")
+    private String info;
 
-    @Column
-    private String phone;
-
-    @Column
-    private String password;
-
-    @Column
-    private Long user_authority;
-
+    @Column(name = "title")
+    private String title;
 
     @Column(name = "create_time")
     private Date createTime;
@@ -43,4 +42,6 @@ public class User {
     @Column(name = "modify_time")
     private Date modifyTime;
 
+    @Column(name = "end_time")
+    private Date endTime;
 }

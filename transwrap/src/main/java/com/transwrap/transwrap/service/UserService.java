@@ -6,6 +6,7 @@ import com.transwrap.transwrap.repository.UserRepo;
 import com.transwrap.transwrap.utils.ApiResult;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
+
 import javax.annotation.Resource;
 import java.util.List;
 
@@ -19,6 +20,7 @@ import java.util.List;
 public class UserService {
 
     private final ItemCache<User> itemCache = new ItemCache<>();
+    private final ItemCache<String> phoneCache = new ItemCache<>();
 
     @Resource
     UserRepo userRepo;
@@ -31,30 +33,40 @@ public class UserService {
     }
 
     public ApiResult getUserInfoById(String user_id) {
-        User user = userRepo.getUserById(user_id);
-        if(user==null)
-            ApiResult.fail("没有对应的用户");
-        return ApiResult.success(user);
+        if (!itemCache.containsObject(user_id)) {
+            User user = userRepo.getUserById(user_id);
+            if (user == null)
+                ApiResult.fail("没有对应的用户");
+        }
+        return ApiResult.success(itemCache.getCached(user_id));
     }
 
 
-    public ApiResult userLogin(String password, String userId){
-        User user = userRepo.getUserById(userId);
-        if(user==null) {
-            user = userRepo.getUserByPhone(userId);
-        }
-        if(DigestUtils.md5DigestAsHex(password.getBytes()).equals(user.getPassword())) {
-            itemCache.updateCache(userId,user);
+    public ApiResult userLogin(String password, String user_id) {
+        User user;
+        if (!itemCache.containsObject(user_id)) {
+            if (!phoneCache.containsObject(user_id)) {
+                user = userRepo.getUserById(user_id);
+                if (user == null) {
+                    user = userRepo.getUserByPhone(user_id);
+                    phoneCache.updateCache(user_id, String.valueOf(user.getId()));
+                    itemCache.updateCache(String.valueOf(user.getId()), user);
+                } else
+                    itemCache.updateCache(user_id, user);
+            } else
+                user = itemCache.getCached(phoneCache.getCached(user_id));
+        } else
+            user = itemCache.getCached(user_id);
+        if (DigestUtils.md5DigestAsHex(password.getBytes()).equals(user.getPassword())) {
             return ApiResult.success("the password is right!");
-        }
-        else
+        } else
             return ApiResult.fail("the password is wrong!");
     }
 
-    public ApiResult userAuthorityUpdate(String id,String user_authority){
-        userRepo.updateStatus(id,user_authority);
+    public ApiResult userAuthorityUpdate(String id, String user_authority)  {
+        userRepo.updateStatus(id, user_authority);
         itemCache.getCached(id).setUser_authority(Long.parseLong(user_authority));
-        itemCache.updateCache(id,itemCache.getCached(id));
+        itemCache.updateCache(id, itemCache.getCached(id));
         return ApiResult.success();
     }
 

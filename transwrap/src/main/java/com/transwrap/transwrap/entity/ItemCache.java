@@ -30,4 +30,9 @@ public class ItemCache<T> {
                 return false;
         return true;
     }
+
+
+    public boolean containsObject(String id){
+        return map.containsKey(id);
+    }
 }
