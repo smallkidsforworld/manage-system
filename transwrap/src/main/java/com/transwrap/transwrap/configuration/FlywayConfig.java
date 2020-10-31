@@ -18,9 +18,9 @@ import java.sql.Statement;
  * @author yang.song
  */
 @Configuration
-public class FlywayConfiguration {
+public class FlywayConfig {
     private static final Logger LOG = LoggerFactory
-            .getLogger(FlywayConfiguration.class);
+            .getLogger(FlywayConfig.class);
 
     static final String JDBC_PREFIX = "jdbc:";
 

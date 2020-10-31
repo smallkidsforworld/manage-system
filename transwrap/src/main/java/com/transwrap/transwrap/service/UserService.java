@@ -1,5 +1,7 @@
 package com.transwrap.transwrap.service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.transwrap.transwrap.entity.ItemCache;
 import com.transwrap.transwrap.po.User;
 import com.transwrap.transwrap.repository.UserRepo;
@@ -68,6 +70,11 @@ public class UserService {
         itemCache.getCached(id).setUser_authority(Long.parseLong(user_authority));
         itemCache.updateCache(id, itemCache.getCached(id));
         return ApiResult.success();
+    }
+
+    public PageInfo testThePageHelper(){
+        PageHelper.startPage(1,10);
+        return PageInfo.of(userRepo.getAllUser());
     }
 
 }

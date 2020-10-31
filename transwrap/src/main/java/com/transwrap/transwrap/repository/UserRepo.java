@@ -37,5 +37,4 @@ public class UserRepo {
         userMapper.updateStatus(id, user_authority);
     }
 
-
 }

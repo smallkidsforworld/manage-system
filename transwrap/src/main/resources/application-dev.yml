@@ -9,11 +9,20 @@ spring:
   flyway:
     locations: classpath:db/migration
     baseline-on-migrate: true
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: root
+    password: 121511
+
 server:
   port: 10000
+
 store:
   path: C:\data
   temporary: c:\temp
+
+
 
 swagger:
   enable: true
