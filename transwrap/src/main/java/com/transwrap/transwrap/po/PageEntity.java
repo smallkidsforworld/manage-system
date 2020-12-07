@@ -16,6 +16,4 @@ public class PageEntity<T> {
     private List<T> data;
     private int size;
     private int page;
-
-    
 }

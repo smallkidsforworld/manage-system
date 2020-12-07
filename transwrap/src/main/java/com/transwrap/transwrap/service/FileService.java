@@ -56,7 +56,6 @@ public class FileService {
     }
 
     public ApiResult upLoadMoreFile(String[] file_list, MultipartFile[] file_info) throws IOException {
-
         if (file_list == null || file_info == null || file_list.length != file_info.length || file_list.length == 0)
             return ApiResult.fail("input param is wrong");
         List<CodeValue> load_info = new ArrayList<>();

@@ -15,4 +15,5 @@ import lombok.NoArgsConstructor;
 public class CodeValue {
     private String code;
     private Object value;
+
 }

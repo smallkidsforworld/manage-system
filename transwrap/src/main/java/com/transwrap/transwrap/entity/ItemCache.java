@@ -24,13 +24,13 @@ public class ItemCache<T> {
         map.put(id,object);
     }
 
+
     public boolean checkTheCacheWithDB(BaseMapper<T> mapper){
         for(String id:map.keySet())
             if(!mapper.selectByPrimaryKey(id).equals(map.get(id)))
                 return false;
         return true;
     }
-
 
     public boolean containsObject(String id){
         return map.containsKey(id);
