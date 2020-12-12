@@ -5,6 +5,7 @@ import com.transwrap.transwrap.entity.FileInfo;
 import com.transwrap.transwrap.utils.ApiResult;
 import com.transwrap.transwrap.utils.FileUtil;
 import com.transwrap.transwrap.utils.ZipUtil;
+import org.apache.commons.logging.LogFactory;
 import org.apache.tomcat.util.buf.StringUtils;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,6 @@ import java.util.*;
  */
 @Service
 public class FileService {
-
     @Value("${store.path}")
     private String file_store_path;
 
@@ -42,8 +42,9 @@ public class FileService {
     }
 
     public ApiResult upLoadFile(String fileType, MultipartFile file) throws IOException {
-        if (file.isEmpty())
+        if (file.isEmpty()) {
             return ApiResult.fail(" file is empty ");
+        }
         String filePath = StringUtils.join(Arrays.asList(file_store_path, fileType, file.getOriginalFilename()), FileUtil.split);
         File director = new File(file_store_path + FileUtil.split + fileType);
         if (!director.exists())
