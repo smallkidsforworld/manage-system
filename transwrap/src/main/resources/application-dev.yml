@@ -3,7 +3,7 @@ spring:
     name: manage-system
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/useryml?characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false
+    url: jdbc:mysql://10.128.214.94:3306/useryml?characterEncoding=utf8&autoReconnect=true&failOverReadOnly=false&allowMultiQueries=true&useSSL=false&serverTimezone=Asia/Shanghai&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false
     username: root
     password: 121511
   flyway:
