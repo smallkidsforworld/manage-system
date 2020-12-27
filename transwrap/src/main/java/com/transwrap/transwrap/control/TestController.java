@@ -1,12 +1,10 @@
 package com.transwrap.transwrap.control;
 
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.PriorityQueue;
-import java.util.Queue;
 
+@Api(tags = "测试功能")
 @RestController
 @RequestMapping(value = "/test")
 public class TestController {
@@ -17,8 +15,8 @@ public class TestController {
     }
 
     @PutMapping(value = "/test_put")
-    public String paramers(@RequestParam String send_info, @RequestParam String send_id) {
-        return "success";
+    public String testRequestParam(@RequestParam String send_info, @RequestParam String send_id) {
+        return "success " + "send_id" + send_id + " send_info " + send_info;
     }
 
     @GetMapping(value = "/test.jsp")
@@ -26,6 +24,10 @@ public class TestController {
         return "Success";
     }
 
+    @GetMapping(value = "/testError")
+    public void testError() throws Exception {
+        throw new Exception("test throw exception");
+    }
 
 
 }

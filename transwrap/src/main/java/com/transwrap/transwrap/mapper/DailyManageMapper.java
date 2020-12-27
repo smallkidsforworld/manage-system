@@ -2,6 +2,7 @@ package com.transwrap.transwrap.mapper;
 
 import com.transwrap.transwrap.po.DailyManage;
 import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.Mapping;
 import tk.mybatis.mapper.common.BaseMapper;
 
 import java.util.Date;
@@ -15,8 +16,6 @@ import java.util.List;
 
 @Mapper
 public interface DailyManageMapper extends BaseMapper<DailyManage> {
-    @Select("select * from daily_manage")
-    List<DailyManage> getAllDailyManage();
 
     @Select("select * from daily_manage where id = #{id}")
     DailyManage queryDailyManageByItemID(@Param("id") String id);
