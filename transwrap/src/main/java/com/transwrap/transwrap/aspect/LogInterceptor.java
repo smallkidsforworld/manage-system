@@ -19,13 +19,13 @@ import org.springframework.stereotype.Component;
 public class LogInterceptor {
     private final Logger logger = LoggerFactory.getLogger(LogInterceptor.class);
 
-    @Pointcut(value = "execution(* com.transwrap.transwrap.control.TestController.testError())")
+    @Pointcut(value = "execution(* com.transwrap.transwrap.control..*.*(..))")
     private void test() {
     }
 
     @Before(value = "test()")
     public void beforeCallMethod() {
-        logger.info(TimeUtil.getCurrentDay() + "log start : " + TimeUtil.getCurrentTime());
+        logger.info(TimeUtil.getCurrentDay() + " log start : " + TimeUtil.getCurrentTime());
     }
 
     @AfterThrowing(throwing = "exception", value = "test()")
@@ -42,8 +42,8 @@ public class LogInterceptor {
     @Around(value = "test()")
     public Object test(ProceedingJoinPoint process) throws Throwable {
         Object[] args = process.getArgs();
-        logger.info("methodName ", process.getSignature().getName());
-        logger.info("Object Name ", process.getTarget().getClass().getName());
+        logger.info("methodName "+ process.getSignature().getName());
+        logger.info("Object Name "+  process.getTarget().getClass().getName());
         return process.proceed(args);
     }
 }
