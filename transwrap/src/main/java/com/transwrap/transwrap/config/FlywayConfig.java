@@ -1,4 +1,4 @@
-package com.transwrap.transwrap.configuration;
+package com.transwrap.transwrap.config;
 
 import org.flywaydb.core.Flyway;
 import org.slf4j.Logger;

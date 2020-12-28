@@ -5,7 +5,6 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 /**
  * @description: 测试testError.大致分为启动前，产生错误后，以及最终的执行完成后
@@ -14,10 +13,9 @@ import org.springframework.stereotype.Component;
  */
 
 
-@Aspect
-@Component
-public class LogInterceptor {
-    private final Logger logger = LoggerFactory.getLogger(LogInterceptor.class);
+@Deprecated
+public class LogInterceptorTest {
+    private final Logger logger = LoggerFactory.getLogger(LogInterceptorTest.class);
 
     @Pointcut(value = "execution(* com.transwrap.transwrap.control..*.*(..))")
     private void test() {

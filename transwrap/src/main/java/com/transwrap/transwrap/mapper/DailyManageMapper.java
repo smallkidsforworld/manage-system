@@ -2,7 +2,6 @@ package com.transwrap.transwrap.mapper;
 
 import com.transwrap.transwrap.po.DailyManage;
 import org.apache.ibatis.annotations.*;
-import org.springframework.web.bind.annotation.Mapping;
 import tk.mybatis.mapper.common.BaseMapper;
 
 import java.util.Date;

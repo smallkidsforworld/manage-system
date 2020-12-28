@@ -16,13 +16,22 @@ create table `user`(
 
 create table `daily_manage`  (
     `id` integer NOT NULL AUTO_INCREMENT COMMENT '自增id',
-    `user_id` integer,
+    `userId` integer,
     `info` text comment '信息',
     `title` varchar(50) comment '标题',
-    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `end_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间',
+    `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `modifyTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `endTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '结束时间',
     primary key (`id`),
-    foreign key(user_id) references user(id),
-    unique (user_id,`title`)
+    foreign key(userId) references user(id),
+    unique (userId,`title`)
 );
+
+
+create table `log_recode` (
+    `id` integer NOT NULL AUTO_INCREMENT COMMENT '自增id',
+    `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '调用时间',
+    `interfaceName` varchar (25) not null comment '接口名',
+    `callMethodName` varchar (25) not null comment '调用方法名',
+    `callerAddress` varchar (15) not null comment '调用者IP',
+)

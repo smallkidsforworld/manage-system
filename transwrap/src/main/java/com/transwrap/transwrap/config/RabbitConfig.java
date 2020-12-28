@@ -1,4 +1,4 @@
-package com.transwrap.transwrap.configuration;
+package com.transwrap.transwrap.config;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Qualifier;

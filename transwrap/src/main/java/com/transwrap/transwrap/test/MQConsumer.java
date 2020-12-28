@@ -1,7 +1,7 @@
 package com.transwrap.transwrap.test;
 
 import com.rabbitmq.client.Channel;
-import com.transwrap.transwrap.configuration.RabbitConfig;
+import com.transwrap.transwrap.config.RabbitConfig;
 import org.springframework.amqp.core.Message;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 

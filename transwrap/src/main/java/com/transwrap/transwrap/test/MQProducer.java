@@ -1,6 +1,6 @@
 package com.transwrap.transwrap.test;
 
-import com.transwrap.transwrap.configuration.RabbitConfig;
+import com.transwrap.transwrap.config.RabbitConfig;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
