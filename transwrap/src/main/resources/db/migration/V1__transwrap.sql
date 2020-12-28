@@ -4,9 +4,9 @@ create table `user`(
     `introduction` text comment '个人介绍',
     `phone` varchar(11) unique,
     `password` varchar(32) ,
-    `create_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
-    `modify_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
-    `user_authority` integer default 0 comment '用户权限',
+    `createTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP COMMENT '创建时间',
+    `modifyTime` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
+    `userAuthority` integer default 0 comment '用户权限',
     primary key (`id`),
     unique (`name`,`phone`)
 ) engine = innodb

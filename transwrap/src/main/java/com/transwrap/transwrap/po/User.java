@@ -13,34 +13,34 @@ import java.util.Date;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Entity
-@Table(name = "user")
+//@Entity
+//@Table(name = "user")
 public class User {
 
-    @Id
-    @Column
+//    @Id
+//    @Column
     private Long id;
 
-    @Column
+//    @Column
     private String name;
 
-    @Column
+//    @Column
     private String introduction;
 
-    @Column
+//    @Column
     private String phone;
 
-    @Column
+//    @Column
     private String password;
 
-    @Column
-    private Long user_authority;
+//    @Column
+    private Long userAuthority;
 
 
-    @Column(name = "create_time")
+//    @Column
     private Date createTime;
 
-    @Column(name = "modify_time")
+//    @Column
     private Date modifyTime;
 
 }

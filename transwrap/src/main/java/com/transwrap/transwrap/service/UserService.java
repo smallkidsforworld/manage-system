@@ -67,7 +67,7 @@ public class UserService {
 
     public ApiResult userAuthorityUpdate(String id, String user_authority)  {
         userRepo.updateStatus(id, user_authority);
-        itemCache.getCached(id).setUser_authority(Long.parseLong(user_authority));
+        itemCache.getCached(id).setUserAuthority(Long.parseLong(user_authority));
         itemCache.updateCache(id, itemCache.getCached(id));
         return ApiResult.success();
     }

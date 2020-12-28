@@ -14,6 +14,9 @@ spring:
     port: 5672
     username: root
     password: 121511
+  jackson:
+    time-zone: GMT+8
+
 
 server:
   port: 10000
@@ -26,3 +29,6 @@ store:
 
 swagger:
   enable: true
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
