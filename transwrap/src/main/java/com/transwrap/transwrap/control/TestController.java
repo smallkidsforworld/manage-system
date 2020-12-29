@@ -3,6 +3,8 @@ package com.transwrap.transwrap.control;
 import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 
 @Api(tags = "测试功能")
 @RestController
@@ -27,6 +29,11 @@ public class TestController {
     @GetMapping(value = "/testError")
     public void testError() throws Exception {
         throw new Exception("test throw exception");
+    }
+
+    @GetMapping(value="/test_ip_address")
+    public String testIpAddress(@RequestParam HttpServletRequest httpServletRequest){
+        return httpServletRequest.getRemoteAddr();
     }
 
 
