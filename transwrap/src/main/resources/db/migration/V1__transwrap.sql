@@ -34,4 +34,5 @@ create table `log_recode` (
     `interfaceName` varchar (25) not null comment '接口名',
     `callMethodName` varchar (25) not null comment '调用方法名',
     `callerAddress` varchar (15) not null comment '调用者IP',
+    primary key (`id`)
 )

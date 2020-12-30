@@ -6,6 +6,8 @@ import com.transwrap.transwrap.entity.ItemCache;
 import com.transwrap.transwrap.po.User;
 import com.transwrap.transwrap.repository.UserRepo;
 import com.transwrap.transwrap.utils.ApiResult;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
@@ -21,6 +23,7 @@ import java.util.List;
 @Service
 public class UserService {
 
+    private final Logger log = LoggerFactory.getLogger(UserService.class);
     private final ItemCache<User> itemCache = new ItemCache<>();
     private final ItemCache<String> phoneCache = new ItemCache<>();
 
@@ -37,8 +40,12 @@ public class UserService {
     public ApiResult getUserInfoById(String user_id) {
         if (!itemCache.containsObject(user_id)) {
             User user = userRepo.getUserById(user_id);
-            if (user == null)
-                ApiResult.fail("没有对应的用户");
+            if (user == null) {
+                log.info("没有对应的用户");
+                return ApiResult.fail("没有对应的用户");
+            }
+            log.info("user get done!!");
+            itemCache.updateCache(user_id,user);
         }
         return ApiResult.success(itemCache.getCached(user_id));
     }
@@ -65,15 +72,15 @@ public class UserService {
             return ApiResult.fail("the password is wrong!");
     }
 
-    public ApiResult userAuthorityUpdate(String id, String user_authority)  {
+    public ApiResult userAuthorityUpdate(String id, String user_authority) {
         userRepo.updateStatus(id, user_authority);
         itemCache.getCached(id).setUserAuthority(Long.parseLong(user_authority));
         itemCache.updateCache(id, itemCache.getCached(id));
         return ApiResult.success();
     }
 
-    public PageInfo testThePageHelper(){
-        PageHelper.startPage(1,10);
+    public PageInfo testThePageHelper() {
+        PageHelper.startPage(1, 10);
         return PageInfo.of(userRepo.getAllUser());
     }
 
