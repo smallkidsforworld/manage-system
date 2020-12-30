@@ -21,6 +21,7 @@ public class RabbitConfig {
     public static final String EXCHANGE_TOPICS_INFORM = "exchange_topics_inform";
     public static final String ROUTINGKEY_EMAIL = "inform.#.email.#";
     public static final String ROUTINGKEY_SMS = "inform.#.sms.#";
+    public static final String QUEUE_INFO_ITCAST = "itCast";
 
     @Bean(EXCHANGE_TOPICS_INFORM)
     public Exchange EXCHANGE_TOPICS_INFORM() {
@@ -30,26 +31,33 @@ public class RabbitConfig {
 
 
     //声明QUEUE_INFORM_EMAIL队列
+    @Bean(QUEUE_INFO_ITCAST)
+    public Queue QUEUE_INFO_ITCAST() {
+        return new Queue(QUEUE_INFO_ITCAST);
+    }
+
     @Bean(QUEUE_INFORM_EMAIL)
-    public Queue QUEUE_INFORM_EMAIL(){
+    public Queue QUEUE_INFORM_EMAIL() {
         return new Queue(QUEUE_INFORM_EMAIL);
     }
+
     //声明QUEUE_INFORM_SMS队列
     @Bean(QUEUE_INFORM_SMS)
-    public Queue QUEUE_INFORM_SMS(){
+    public Queue QUEUE_INFORM_SMS() {
         return new Queue(QUEUE_INFORM_SMS);
     }
 
     //ROUTINGKEY_EMAIL队列绑定交换机，指定routingKey
     @Bean
     public Binding BINDING_QUEUE_INFORM_EMAIL(@Qualifier(QUEUE_INFORM_EMAIL) Queue queue,
-                                              @Qualifier(EXCHANGE_TOPICS_INFORM) Exchange exchange){
+                                              @Qualifier(EXCHANGE_TOPICS_INFORM) Exchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(ROUTINGKEY_EMAIL).noargs();
     }
+
     //ROUTINGKEY_SMS队列绑定交换机，指定routingKey
     @Bean
     public Binding BINDING_ROUTINGKEY_SMS(@Qualifier(QUEUE_INFORM_SMS) Queue queue,
-                                          @Qualifier(EXCHANGE_TOPICS_INFORM) Exchange exchange){
+                                          @Qualifier(EXCHANGE_TOPICS_INFORM) Exchange exchange) {
         return BindingBuilder.bind(queue).to(exchange).with(ROUTINGKEY_SMS).noargs();
     }
 

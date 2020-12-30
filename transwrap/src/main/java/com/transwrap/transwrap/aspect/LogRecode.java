@@ -26,7 +26,6 @@ public class LogRecode {
     @Resource
     HttpServletRequest httpServletRequest;
 
-
     @Pointcut(value = "execution(* com.transwrap.transwrap.control.UserController.*.*(..))")
     private void control() {
     }
@@ -36,10 +35,10 @@ public class LogRecode {
         logger.warn(" user has been access");
     }
 
-    @AfterThrowing(throwing = "ex", value = "execution(* com.transwrap.transwrap.*.*(..))", argNames = "ex,joinPoint")
-    public void recodeTheException(Exception ex, JoinPoint joinPoint) {
-        logger.error(joinPoint.getSignature().getName() + " : error occur : ", ex);
-    }
+//    @AfterThrowing(throwing = "ex", value = "execution(* com.transwrap.transwrap.*.*(..))", argNames = "ex,joinPoint")
+//    public void recodeTheException(Exception ex, JoinPoint joinPoint) {
+//        logger.error(joinPoint.getSignature().getName() + " : error occur : ", ex);
+//    }
 
     @Around(value = "execution(* com.transwrap.transwrap.control.FileController.*(..))")
     public Object recodeTheFileOperator(ProceedingJoinPoint pjp) throws Throwable {
