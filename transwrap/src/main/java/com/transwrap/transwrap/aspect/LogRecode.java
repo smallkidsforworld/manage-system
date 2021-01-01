@@ -13,7 +13,7 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @description:
+ * @description: 用于实现日志相关操作。
  * @author: yml
  * @time: 2020/12/28
  */
