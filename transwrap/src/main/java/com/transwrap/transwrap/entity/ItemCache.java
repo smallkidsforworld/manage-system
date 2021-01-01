@@ -2,6 +2,7 @@ package com.transwrap.transwrap.entity;
 
 import tk.mybatis.mapper.common.BaseMapper;
 
+import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -12,15 +13,16 @@ import java.util.concurrent.ConcurrentHashMap;
  * @modified By：
  */
 public class ItemCache<T> {
-    private final Map<String,T> map = new ConcurrentHashMap<>();
+    private final Map<String,T> map = new HashMap<>();
 
     public T getCached(String id){
         return map.getOrDefault(id,null);
     }
 
-    public void updateCache(String id, T object){
-        if(!map.containsKey(id))
+    public synchronized void updateCache(String id, T object){
+        if(!map.containsKey(id)) {
             return;
+        }
         map.put(id,object);
     }
 
